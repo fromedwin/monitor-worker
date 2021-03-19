@@ -6,7 +6,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
 fi
 
 # domains=(sebastienbarbier.com www.sebastienbarbier.com)
-domains=(ca-1.sebastienbarbier.com fr-1.sebastienbarbier.com)
+domains=(ca-1.sebastienbarbier.com) # fr-1.sebastienbarbier.com)
 rsa_key_size=4096
 data_path="./certbot"
 email="contact@sebastienbarbier.com" # Adding a valid address is strongly recommended

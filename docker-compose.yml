@@ -12,6 +12,8 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
       - ./.htpasswd:/etc/nginx/.htpasswd:ro
+    volumes_from:
+      - prometheus
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   certbot:
     image: certbot/certbot
@@ -27,7 +29,7 @@ services:
       - ./prometheus/prometheus_rules.yml:/etc/prometheus/prometheus_rules.yml:ro
     links:
       - blackbox
-    user: "65534"
+    user: root
     ports:
       - 9090:9090
   blackbox:

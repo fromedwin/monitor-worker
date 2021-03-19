@@ -1,5 +1,12 @@
 # monitor-client
+
 Monitor from edwin: Prometheus + Blackbox
+
+## Clone monitor-clietn repository
+
+```
+$> git clone https://github.com/fromedwin/monitor-client.git
+```
 
 ## Configure
 
