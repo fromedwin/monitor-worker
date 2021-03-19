@@ -1,0 +1,64 @@
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+rule_files:
+  - /etc/prometheus/prometheus_rules.yml
+alerting:
+  alertmanagers:
+  - scheme: http
+    timeout: 10s
+    api_version: v1
+    static_configs:
+    - targets: 
+      - alertmanager.sebastienbarbier.com
+scrape_configs:
+- job_name: prometheus
+  honor_timestamps: true
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  metrics_path: /metrics
+  scheme: http
+  static_configs:
+  - targets:
+    - localhost:9090
+- job_name: sebastienbarbier
+  honor_timestamps: true
+  scrape_interval: 15s
+  scrape_timeout: 5s
+  metrics_path: /metrics
+  scheme: http
+  static_configs:
+  - targets:
+    - fr-1.sebastienbarbier.com:9100
+    - ca-1.sebastienbarbier.com:9100
+- job_name: 'blackbox'
+  metrics_path: /probe
+  scrape_interval: 40s
+  params:
+    module: [http_2xx]  # Look for a HTTP 200 response.
+  static_configs:
+    - labels:
+        user: seven23
+      targets:
+      - https://seven23.io
+      - https://test.seven23.io
+      - https://app.seven23.io
+      - https://next.seven23.io
+    - labels: 
+        user: sbarbier
+      targets:
+      - https://sebastienbarbier.com # Target to probe with http on port 8080.
+      - https://blog.sebastienbarbier.com # Target to probe with http on port 8080.
+      - https://sebastienbarbier.fr
+      - https://fromedwin.com
+      - https://grafana.sebastienbarbier.com
+      - https://whereis.sebastienbarbier.com
+#      - http://django:8000/healthy
+  relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: blackbox:9115  # The blackbox exporter's real hostname:port.
