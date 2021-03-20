@@ -26,7 +26,7 @@ user2:$apr1$QdR8fNLT$vbCEEzDj7LyqCMyNpSoBh/
 user3:$apr1$Mr5A0e.U$0j39Hp5FfxRkneklXaMrr/
 ```
 
-## Create nginx golder in data/log
+## Create nginx folder in data/log
 
 ```
 $> mkdir data/log/nginx
