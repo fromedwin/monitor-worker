@@ -55,6 +55,7 @@ scrape_configs:
       - https://fromedwin.com
       - https://grafana.sebastienbarbier.com
       - https://whereis.sebastienbarbier.com
+      - https://status.fromedwin.com/healthy/1/
 #      - http://django:8000/healthy
   relabel_configs:
     - source_labels: [__address__]
