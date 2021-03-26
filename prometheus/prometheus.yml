@@ -47,6 +47,16 @@ scrape_configs:
     - ca-1.sebastienbarbier.com:9100
 - job_name: 'blackbox'
   metrics_path: /probe
+  scrape_interval: 1h
+  params:
+    module: [http_2xx]  # Look for a HTTP 200 response.
+  static_configs:
+    - labels:
+        user: sbarbier
+      targets:
+      - https://whereis.sebastienbarbier.com
+- job_name: 'blackbox-2'
+  metrics_path: /probe
   scrape_interval: 40s
   params:
     module: [http_2xx]  # Look for a HTTP 200 response.
@@ -58,7 +68,7 @@ scrape_configs:
       - https://test.seven23.io
       - https://app.seven23.io
       - https://next.seven23.io
-    - labels: 
+    - labels:
         user: sbarbier
       targets:
       - https://sebastienbarbier.com # Target to probe with http on port 8080.
@@ -66,7 +76,6 @@ scrape_configs:
       - https://sebastienbarbier.fr
       - https://fromedwin.com
       - https://grafana.sebastienbarbier.com
-      - https://whereis.sebastienbarbier.com
       - https://status.fromedwin.com/healthy/1/
   relabel_configs:
     - source_labels: [__address__]
