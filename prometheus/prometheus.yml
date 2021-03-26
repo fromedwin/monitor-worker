@@ -55,6 +55,13 @@ scrape_configs:
         user: sbarbier
       targets:
       - https://whereis.sebastienbarbier.com
+  relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: blackbox:9115  # The blackbox exporter's real hostname:port.
 - job_name: 'blackbox-2'
   metrics_path: /probe
   scrape_interval: 40s
