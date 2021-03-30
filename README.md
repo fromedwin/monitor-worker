@@ -37,4 +37,6 @@ $> mkdir data/log/nginx
 ```
 $> docker-compose up
 ```
+## Resources
 
+- [Awesome Prometheus Rules](https://awesome-prometheus-alerts.grep.to/rules.html)

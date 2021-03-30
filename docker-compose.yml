@@ -25,8 +25,8 @@ services:
     image: prom/prometheus
     volumes:
       - ./data/prometheus:/prometheus
+      - ./prometheus/alerts:/etc/prometheus/alerts
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - ./prometheus/prometheus_rules.yml:/etc/prometheus/prometheus_rules.yml:ro
     links:
       - blackbox
     user: root
