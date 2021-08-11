@@ -3,7 +3,7 @@ groups:
   rules:
   - alert: InstanceDown
     expr: probe_success == 0
-    for: 1m
+    for: 2m
     labels:
       severity: critical
     annotations:
@@ -27,7 +27,7 @@ groups:
       description: "Blackbox probe took more than 1s to complete\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: BlackboxProbeHttpFailure
     expr: probe_http_status_code <= 199 OR probe_http_status_code >= 400
-    for: 0m
+    for: 1m
     labels:
       severity: critical
     annotations:

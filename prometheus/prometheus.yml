@@ -9,8 +9,8 @@ alerting:
   - scheme: http
     timeout: 10s
     basic_auth:
-      username: admin
-      password: admin
+      username: YOUR_USERNAME
+      password: YOUR_PASSWORD
     api_version: v1
     static_configs:
     - targets: 
