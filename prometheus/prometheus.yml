@@ -64,7 +64,7 @@ scrape_configs:
       replacement: blackbox:9115  # The blackbox exporter's real hostname:port.
 - job_name: 'blackbox-2'
   metrics_path: /probe
-  scrape_interval: 40s
+  scrape_interval: 1m
   params:
     module: [http_2xx]  # Look for a HTTP 200 response.
   static_configs:
