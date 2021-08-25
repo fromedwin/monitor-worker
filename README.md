@@ -2,7 +2,7 @@
 
 Monitor from edwin: Prometheus + Blackbox
 
-## Clone monitor-clietn repository
+## Clone monitor-client repository
 
 ```
 $> git clone https://github.com/fromedwin/monitor-client.git

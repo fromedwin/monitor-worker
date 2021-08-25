@@ -20,6 +20,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 See for sample https://raw.githubusercontent.com/favoloso/conventional-changelog-emoji/master/CHANGELOG.md
 -->
+## [0.2.0] - yyyy-mm-dd
+### ✨ Feature
+- Provide run scripts to automate some configuration (#1)[https://github.com/fromedwin/monitor-client/issues/1]
+- Fetch prometheus and alerts configuration files on start (#2)[https://github.com/fromedwin/monitor-client/issues/2]
 
 ## [0.1.0] - 2021-08-11
 ### ✨ Feature
