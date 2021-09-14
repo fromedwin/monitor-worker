@@ -35,7 +35,7 @@ $> mkdir data/log/nginx
 ## Run
 
 ```
-$> docker-compose up
+$> ./run.sh
 ```
 ## Resources
 
