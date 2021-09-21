@@ -34,5 +34,14 @@ services:
   blackbox:
     image: prom/blackbox-exporter:master
     user: "65534"
+  heartbeats:
+    image: python:latest
+    volumes:
+      - .:/etc/monitor-client
+    environment:
+      - UUID=${UUID}
+      - SERVER=${SERVER}
+    network_mode: "host"
+    entrypoint: /etc/monitor-client/heartbeats/docker-entrypoint.sh
 volumes:
   logvolume01: {}
