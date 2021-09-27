@@ -7,8 +7,9 @@ from dotenv import load_dotenv
 load_dotenv()
 SERVER_PROTOCOL = 'http' # if os.environ.get("PRODUCTION") == '0' else 'https'
 SERVER_URL = os.environ.get("SERVER")
+UUID = os.environ.get("UUID")
 
-SERVER_PROMETHEUS_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/prometheus/'
+SERVER_PROMETHEUS_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/prometheus/{UUID}'
 SERVER_ALERTS_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/alerts/'
 
 # Fetch PROMETHEUS configuration files
@@ -19,13 +20,11 @@ try:
 except Exception as err:
     raise Exception(f'Error occurred: {err}')
 else:
-    content = json.loads(response.content)
-    print(f'> {len(content)} prometheus have been loaded from {SERVER_URL}')
-    for config in content:
-        print(config['title'])
-        with open(f'prometheus/{config["title"]}.yml', 'w') as file:
-            file.write(config['yaml'])
-            file.close()
+    content = response.text
+    print(f'> Prometheus have been loaded from {SERVER_URL}')
+    with open(f'prometheus/prometheus.yml', 'w') as file:
+        file.write(content)
+        file.close()
 
 print(f'Loading ALERTS configuration files at {SERVER_ALERTS_CONFIG_URL}')
 # Fetch ALERTS configuration files
