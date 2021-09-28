@@ -29,8 +29,6 @@ services:
     links:
       - blackbox
     user: root
-    ports:
-      - 9090:9090
   blackbox:
     image: prom/blackbox-exporter:master
     user: "65534"

@@ -32,6 +32,6 @@ if [ $? -ne 0 ]; then
 	exit
 fi
 
-docker-compose up -d
+docker-compose up
 
 echo "Access prometheus at localhost:$PORT"
