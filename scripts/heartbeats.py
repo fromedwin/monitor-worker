@@ -27,5 +27,4 @@ while True:
 	except Exception as err:
 	    raise Exception(f'Error occurred: {err}')
 
-	print('.')
 	time.sleep(10)

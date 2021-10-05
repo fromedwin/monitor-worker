@@ -19,7 +19,6 @@ def load_config(url=None):
     SERVER_PROMETHEUS_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/prometheus/{UUID}'
     SERVER_ALERTS_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/alerts/'
 
-    print(f'{os.path.dirname( __file__ )}')
     # Fetch PROMETHEUS configuration files
     print(f'Loading PROMETHEUS configuration files at {SERVER_PROMETHEUS_CONFIG_URL}')
     try:
