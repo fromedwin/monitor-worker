@@ -22,6 +22,9 @@ services:
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
   prometheus:
     image: prom/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.enable-lifecycle'
     volumes:
       - ./data/prometheus:/prometheus
       - ./prometheus/alerts:/etc/prometheus/alerts
@@ -39,7 +42,6 @@ services:
     environment:
       - UUID=${UUID}
       - SERVER=${SERVER}
-    network_mode: "host"
     entrypoint: /etc/monitor-client/heartbeats/docker-entrypoint.sh
 volumes:
   logvolume01: {}

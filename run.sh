@@ -13,8 +13,8 @@ fi
 if [[ -z "${PROTOCOL}" ]]; then export PROTOCOL=http
 fi
 # Set default port to access dashboard
-if [[ -z "${SERVER}" ]]; then export SERVER=localhost:8000
-fi
+# if [[ -z "${SERVER}" ]]; then export SERVER=host.docker.internal:8000
+# fi
 
 echo "Register"
 python3 scripts/register.py
@@ -25,7 +25,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Load-config"
-python3 scripts/load-config.py
+python3 scripts/load_config.py
 
 # IF load-config.py return code 0
 if [ $? -ne 0 ]; then
