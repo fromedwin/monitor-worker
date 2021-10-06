@@ -25,6 +25,6 @@ while True:
 
 	    load_config.load_config(SERVER_URL)
 	except Exception as err:
-	    raise Exception(f'Error occurred: {err}')
+		print(f'Error occurred: {err}')
 
 	time.sleep(10)
