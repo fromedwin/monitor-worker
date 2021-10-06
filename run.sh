@@ -12,9 +12,17 @@ fi
 # Set protocol to load nginx
 if [[ -z "${PROTOCOL}" ]]; then export PROTOCOL=http
 fi
-# Set default port to access dashboard
-# if [[ -z "${SERVER}" ]]; then export SERVER=host.docker.internal:8000
-# fi
+
+# Set default username for web auth
+if [[ -z "${WEBAUTH_USERNAME}" ]]; then export WEBAUTH_USERNAME=$(openssl rand -base64 12)
+fi
+# Set default password for webauth
+if [[ -z "${WEBAUTH_PASSWORD}" ]]; then export WEBAUTH_PASSWORD=$(openssl rand -base64 12)
+fi
+
+# GENERATE PASSWORD
+echo "Generate user: $WEBAUTH_USERNAME $WEBAUTH_PASSWORD"
+htpasswd -cmb .htpasswd $WEBAUTH_USERNAME $WEBAUTH_PASSWORD
 
 echo "Register"
 python3 scripts/register.py
