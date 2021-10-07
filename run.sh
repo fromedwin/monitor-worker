@@ -1,0 +1,57 @@
+# Install python dependancies
+pip3 install -r requirements.txt
+
+# If ./.env file exist, we export variables to current system to display later
+if [ -f .env ]; then
+  export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
+fi
+
+# Set default port to access monitor-client web interface
+if [[ -z "${PORT}" ]]; then export PORT=8001
+fi
+# Set protocol to load nginx
+if [[ -z "${PROTOCOL}" ]]; then export PROTOCOL=http
+fi
+# Set default username for web auth
+if [[ -z "${WEBAUTH_USERNAME}" ]]; then export WEBAUTH_USERNAME=$(openssl rand -base64 12)
+fi
+# Set default password for webauth
+if [[ -z "${WEBAUTH_PASSWORD}" ]]; then export WEBAUTH_PASSWORD=$(openssl rand -base64 12)
+fi
+
+# GENERATE PASSWORD
+echo "Generate user: $WEBAUTH_USERNAME $WEBAUTH_PASSWORD"
+htpasswd -cmb .htpasswd $WEBAUTH_USERNAME $WEBAUTH_PASSWORD
+
+echo "Register"
+python3 scripts/register.py
+
+# IF register.py fail
+if [ $? -ne 0 ]; then
+	exit
+fi
+
+echo "Load-config"
+python3 scripts/load_config.py
+
+# IF load-config.py return code 0
+if [ $? -ne 0 ]; then
+	exit
+fi
+
+
+if [[ $@ == *"-d"* ]]; then
+
+	docker-compose up -d
+
+  # IF load-config.py return code 0
+  if [ $? -ne 0 ]; then
+    echo "❌ Docker might not be running."
+    exit
+  fi
+
+	echo "Access prometheus at localhost:$PORT"
+
+else
+  docker-compose up
+fi

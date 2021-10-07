@@ -3,12 +3,11 @@ services:
   nginx:
     image: "nginx:latest"
     ports:
-      - "80:80"
-      - "443:443"
+      - "${PORT:-8001}:80"
     volumes:
       - ./data/log:/var/log
       - ./data/log/nginx:/var/log/nginx
-      - ./nginx/local/:/etc/nginx/conf.d/
+      - ./nginx/${PROTOCOL:-http}/:/etc/nginx/conf.d/
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
       - ./.htpasswd:/etc/nginx/.htpasswd:ro
@@ -23,6 +22,9 @@ services:
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
   prometheus:
     image: prom/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.enable-lifecycle'
     volumes:
       - ./data/prometheus:/prometheus
       - ./prometheus/alerts:/etc/prometheus/alerts
@@ -30,10 +32,16 @@ services:
     links:
       - blackbox
     user: root
-    ports:
-      - 9090:9090
   blackbox:
     image: prom/blackbox-exporter:master
     user: "65534"
+  heartbeats:
+    image: python:latest
+    volumes:
+      - .:/etc/monitor-client
+    environment:
+      - UUID=${UUID}
+      - SERVER=${SERVER}
+    entrypoint: /etc/monitor-client/heartbeats/docker-entrypoint.sh
 volumes:
   logvolume01: {}
