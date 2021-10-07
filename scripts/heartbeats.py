@@ -3,9 +3,8 @@ import requests
 import json
 import datetime
 import time
-from dotenv import load_dotenv
-
 import load_config
+from dotenv import load_dotenv
 
 try:
 	del os.environ["UUID"]

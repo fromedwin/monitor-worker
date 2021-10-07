@@ -12,7 +12,6 @@ fi
 # Set protocol to load nginx
 if [[ -z "${PROTOCOL}" ]]; then export PROTOCOL=http
 fi
-
 # Set default username for web auth
 if [[ -z "${WEBAUTH_USERNAME}" ]]; then export WEBAUTH_USERNAME=$(openssl rand -base64 12)
 fi
@@ -40,6 +39,19 @@ if [ $? -ne 0 ]; then
 	exit
 fi
 
-docker-compose up
 
-echo "Access prometheus at localhost:$PORT"
+if [[ $@ == *"-d"* ]]; then
+
+	docker-compose up -d
+
+  # IF load-config.py return code 0
+  if [ $? -ne 0 ]; then
+    echo "❌ Docker might not be running."
+    exit
+  fi
+
+	echo "Access prometheus at localhost:$PORT"
+
+else
+  docker-compose up
+fi
