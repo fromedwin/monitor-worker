@@ -1,12 +1,17 @@
 import os
 import requests
 import json
+import datetime
+import time
 from dotenv import load_dotenv
-import time as time
 
 import load_config
 
-del os.environ["UUID"]
+try:
+	del os.environ["UUID"]
+except:
+	pass
+
 # Load varriables from .env
 load_dotenv()
 SERVER_PROTOCOL = 'http' # if os.environ.get("PRODUCTION") == '0' else 'https'
@@ -18,12 +23,20 @@ SERVER_HEARTBEATS_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/heartbeat/{UU
 # Print Heartbeat
 print(f'Heartbeat to {SERVER_HEARTBEATS_URL}')
 
+last_update = None
+
 while True:
 	try:
 	    response = requests.get(SERVER_HEARTBEATS_URL)
 	    response.raise_for_status()
 
-	    load_config.load_config(SERVER_URL)
+	    content = json.loads(response.content)
+	    last_modified_setup = datetime.datetime.fromisoformat(content['last_modified_setup'].replace('Z', ''))
+
+	    if not last_update or last_update < last_modified_setup:
+	    	last_update = last_modified_setup
+	    	load_config.load_config(SERVER_URL)
+
 	except Exception as err:
 		print(f'Error occurred: {err}')
 
