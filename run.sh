@@ -31,6 +31,8 @@ if [ $? -ne 0 ]; then
 	exit
 fi
 
+mkdir -p prometheus/alerts
+
 echo "Load-config"
 python3 scripts/load_config.py
 

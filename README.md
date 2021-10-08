@@ -10,6 +10,13 @@ This project is a monitoring client for the monitor [fromedwin project]().
 ## Installation
 
 [Docker](https://www.docker.com/) and [Docker-compose](https://docs.docker.com/compose/) are required to run this project.
+
+### Dependancies
+
+```bash
+  sudo apt install python3-pip apache2-utils
+```
+
 ## Run Locally
 
 Clone the project
