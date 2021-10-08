@@ -42,6 +42,7 @@ services:
     environment:
       - UUID=${UUID}
       - SERVER=${SERVER}
+      - PROTOCOL=${SERVER_PROTOCOL}
     entrypoint: /etc/monitor-client/heartbeats/docker-entrypoint.sh
 volumes:
   logvolume01: {}

@@ -6,8 +6,8 @@ import dotenv
 def register(url):
     # Load varriables from .env
     dotenv.load_dotenv()
-    SERVER_PROTOCOL = 'http' # if os.environ.get("PRODUCTION") == '0' else 'https'
-    SERVER_URL = url or os.environ.get("SERVER")
+    SERVER_PROTOCOL = os.environ.get("PROTOCOL") or 'http' # if os.environ.get("PRODUCTION") == '0' else 'https'
+    SERVER_URL = os.environ.get("SERVER") or url
 
     SERVER_REGISTER_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/register'
 

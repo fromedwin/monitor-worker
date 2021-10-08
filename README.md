@@ -1,36 +1,59 @@
-# monitor-client
 
-Monitor from edwin: Prometheus + Blackbox
+# Monitor-client fromedwin
 
-## Clone monitor-client repository
+This project is a monitoring client for the monitor [fromedwin project]().
 
-```
-$> git clone https://github.com/fromedwin/monitor-client.git
-```
 
-## Run
+## Installation
 
-```
-$> ./run.sh
-```
+[Docker](https://www.docker.com/) and [Docker-compose](https://docs.docker.com/compose/) are required to run this project.
+## Run Locally
 
-## Configure
+Clone the project
 
-Define basic authentication credentials for NGINX using apache2-utils. Verify that apache2-utils (Debian, Ubuntu) or httpd-tools (RHEL/CentOS/Oracle Linux) is installed. (See [documentation](https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/) for details)
-
-```
-$> sudo htpasswd -cm .htpasswd user1
-$> sudo htpasswd .htpasswd user2
+```bash
+  git clone https://github.com/fromedwin/monitor-client.git
 ```
 
-You can confirm that the file contains paired usernames and encrypted passwords:
+Go to the project directory
 
+```bash
+  cd monitor-client
 ```
-$ cat .htpasswd
-user1:$apr1$/woC1jnP$KAh0SsVn5qeSMjTtn0E9Q0
-user2:$apr1$QdR8fNLT$vbCEEzDj7LyqCMyNpSoBh/
-user3:$apr1$Mr5A0e.U$0j39Hp5FfxRkneklXaMrr/
+
+Start the server
+
+```bash
+  ./run.sh
 ```
+  
+## Environment Variables
+
+No variables are required to run locally, but might be needed to configure your production environment
+
+You will need to add the following environment variables to your `.env` file
+
+`PORT` *(default: 8001)*
+
+`SERVER_PROTOCOL` url used to generate letsencrypt SSL certificate and access the application
+
+`SERVER` secret key used by django's session
+
+`WEBAUTH_USERNAME` username to protect none public access
+
+`WEBAUTH_PASSWORD` password to protect none public access
+
+  
+## Feedback
+
+If you have any feedback, please reach out to us at fromedwin@sebastienbarbier.com
+
+  
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+
 ## Resources
 
 - [Awesome Prometheus Rules](https://awesome-prometheus-alerts.grep.to/rules.html)
