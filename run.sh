@@ -41,19 +41,32 @@ if [ $? -ne 0 ]; then
 	exit
 fi
 
+if [[ $@ == *"-prod"* ]]; then
 
-if [[ $@ == *"-d"* ]]; then
+  export NGINX="production" # Will load nginx/production/*.conf files
 
-	docker-compose up -d
-
-  # IF load-config.py return code 0
-  if [ $? -ne 0 ]; then
-    echo "❌ Docker might not be running."
-    exit
+  if [[ $@ == *"-cert"* ]]; then
+    source scripts/init-letsencrypt.sh
+  else
+    docker-compose up -d
   fi
 
-	echo "Access prometheus at localhost:$PORT"
-
 else
-  docker-compose up
+
+  if [[ $@ == *"-d"* ]]; then
+
+  	docker-compose up -d
+
+    # IF load-config.py return code 0
+    if [ $? -ne 0 ]; then
+      echo "❌ Docker might not be running."
+      exit
+    fi
+
+  	echo "Access prometheus at localhost:$PORT"
+
+  else
+    docker-compose up
+  fi
+
 fi
