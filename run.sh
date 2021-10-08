@@ -45,6 +45,27 @@ if [[ $@ == *"-prod"* ]]; then
 
   export NGINX="production" # Will load nginx/production/*.conf files
 
+  if [[ $DOMAIN == *"localhost"* ]]; then
+    echo 'You need to define a custom domain other than localhost or host.docker.internal'
+    exit
+  fi
+
+  if [[ $DOMAIN == *"host.docker.internal"* ]]; then
+    echo 'You need to define a custom domain other than localhost or host.docker.internal'
+    exit
+  fi
+
+  if [[ -z "${MAIL}" ]]; then 
+    echo 'Defining MAIL env var is required'
+    exit
+  fi
+
+  # Set STAGING to 1 if you're testing your setup to avoid hitting request limits
+  if [[ -z "${STAGING}" ]]; then 
+    export STAGING=0
+    echo '⚠️ Running lets-encrypt staging with potential request limits'
+  fi
+  
   if [[ $@ == *"-cert"* ]]; then
     source scripts/init-letsencrypt.sh
   else

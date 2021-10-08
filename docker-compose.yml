@@ -4,6 +4,7 @@ services:
     image: "nginx:latest"
     ports:
       - "${PORT:-8001}:80"
+      - "${PORT_HTTPS:-8444}:443"
     volumes:
       - ./data/log:/var/log
       - ./data/log/nginx:/var/log/nginx
