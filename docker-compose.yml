@@ -1,14 +1,14 @@
 version: "3.9"  # optional since v1.27.0
 services:
   nginx:
-    image: "nginx:latest"
+    image: "nginx:alpine"
     ports:
       - "${PORT:-8001}:80"
       - "${PORT_HTTPS:-8444}:443"
     volumes:
       - ./data/log:/var/log
       - ./data/log/nginx:/var/log/nginx
-      - ./nginx/${NGINX:-local}/:/etc/nginx/conf.d/
+      - ./nginx/conf/${NGINX:-local}/:/etc/nginx/conf.d/
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
       - ./.htpasswd:/etc/nginx/.htpasswd:ro
@@ -22,7 +22,7 @@ services:
       - ./certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v2.30.3
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--web.enable-lifecycle'
@@ -34,10 +34,10 @@ services:
       - blackbox
     user: root
   blackbox:
-    image: prom/blackbox-exporter:master
+    image: prom/blackbox-exporter:v0.19.0
     user: "65534"
   heartbeats:
-    image: python:latest
+    image: python:alpine
     volumes:
       - .:/etc/monitor-client
     environment:
