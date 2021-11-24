@@ -17,7 +17,7 @@ def load_config(url=None):
     UUID = os.environ.get("UUID")
 
     SERVER_PROMETHEUS_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/prometheus/{UUID}'
-    SERVER_ALERTS_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/alerts/'
+    SERVER_ALERTS_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/alerts/{UUID}'
 
     # Fetch PROMETHEUS configuration files
     print(f'Loading PROMETHEUS configuration files at {SERVER_PROMETHEUS_CONFIG_URL}')
@@ -41,13 +41,11 @@ def load_config(url=None):
     except Exception as err:
         raise Exception(f'Error occurred: {err}')
     else:
-        content = json.loads(response.content)
-        print(f'> {len(content)} files have been loaded from {SERVER_URL}')
-        for config in content:
-            print(config['title'])
-            with open(f'{os.path.dirname( __file__ )}/../prometheus/alerts/{config["title"]}.yml', 'w') as file:
-                file.write(config['yaml'])
-                file.close()
+        content = response.text
+        print(f'> Alerts have been loaded from {SERVER_URL}')
+        with open(f'{os.path.dirname( __file__ )}/../prometheus/alerts/alerts.yml', 'w') as file:
+            file.write(content)
+            file.close()
 
     now = datetime.datetime.now()
 
