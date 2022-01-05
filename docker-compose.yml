@@ -35,7 +35,11 @@ services:
     user: root
   blackbox:
     image: prom/blackbox-exporter:v0.19.0
+    command:
+      - '--config.file=/etc/prometheus/blackbox.yml'
     user: "65534"
+    volumes:
+      - ./prometheus/blackbox.yml:/etc/prometheus/blackbox.yml:ro
   heartbeats:
     image: python:latest
     volumes:

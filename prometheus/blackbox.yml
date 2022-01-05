@@ -1,0 +1,6 @@
+modules:
+  http_2xx:
+    prober: http
+    http:
+      headers:
+        User-Agent: "FromEdwinBot Prometheus Blackbox Go-http-client/1.1"

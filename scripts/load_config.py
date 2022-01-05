@@ -6,6 +6,10 @@ import datetime
 
 last_load = datetime.datetime.now()
 
+headers = {
+    'User-Agent': 'FromEdwinBot Python load_config',
+}
+
 def load_config(url=None):
 
     global last_load
@@ -22,7 +26,7 @@ def load_config(url=None):
     # Fetch PROMETHEUS configuration files
     print(f'Loading PROMETHEUS configuration files at {SERVER_PROMETHEUS_CONFIG_URL}')
     try:
-        response = requests.get(SERVER_PROMETHEUS_CONFIG_URL)
+        response = requests.get(SERVER_PROMETHEUS_CONFIG_URL, headers=headers)
         response.raise_for_status()
     except Exception as err:
         raise Exception(f'Error occurred: {err}')
@@ -36,7 +40,7 @@ def load_config(url=None):
     print(f'Loading ALERTS configuration files at {SERVER_ALERTS_CONFIG_URL}')
     # Fetch ALERTS configuration files
     try:
-        response = requests.get(SERVER_ALERTS_CONFIG_URL)
+        response = requests.get(SERVER_ALERTS_CONFIG_URL, headers=headers)
         response.raise_for_status()
     except Exception as err:
         raise Exception(f'Error occurred: {err}')
@@ -51,7 +55,7 @@ def load_config(url=None):
 
     if (now - last_load).seconds >= 30:
         try:
-            response = requests.post('http://prometheus:9090/-/reload')
+            response = requests.post('http://prometheus:9090/-/reload', headers=headers)
             response.raise_for_status()
         except Exception as err:
             pass

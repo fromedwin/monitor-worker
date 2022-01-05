@@ -23,10 +23,13 @@ SERVER_HEARTBEATS_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/heartbeat/{UU
 print(f'Heartbeat to {SERVER_HEARTBEATS_URL}')
 
 last_update = None
+headers = {
+    'User-Agent': 'FromEdwinBot Python heartbeats',
+}
 
 while True:
 	try:
-	    response = requests.get(SERVER_HEARTBEATS_URL)
+	    response = requests.get(SERVER_HEARTBEATS_URL, headers=headers)
 	    response.raise_for_status()
 
 	    content = json.loads(response.content)
