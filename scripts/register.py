@@ -11,6 +11,9 @@ def register(url):
 
     SERVER_REGISTER_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/register'
 
+    if os.environ.get("WEBAUTH_USERNAME") and os.environ.get("WEBAUTH_PASSWORD"):
+        SERVER_REGISTER_URL = SERVER_REGISTER_URL + f'?username={os.environ.get("WEBAUTH_USERNAME")}&password={os.environ.get("WEBAUTH_PASSWORD")}'
+
     # Fetch PROMETHEUS configuration files
     print(f'Register server at {SERVER_REGISTER_URL}')
     try:
