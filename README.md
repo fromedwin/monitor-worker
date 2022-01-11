@@ -45,13 +45,15 @@ You will need to add the following environment variables to your `.env` file
 
 `PORT` *(default: 8001)*
 
-`SERVER_PROTOCOL` url used to generate letsencrypt SSL certificate and access the application
+`SERVER_PROTOCOL`  *(default: https)* protocol used to fetch server APIs
 
-`SERVER` secret key used by django's session
+`SERVER`  *(default: localhost:8000)* url to fetch server APIs to regsiter (run lcoally outside of docker)
 
 `WEBAUTH_USERNAME` username to protect none public access
 
 `WEBAUTH_PASSWORD` password to protect none public access
+
+`URL` url used to access application
 
   
 ## Feedback
