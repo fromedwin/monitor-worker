@@ -43,7 +43,9 @@ No variables are required to run locally, but might be needed to configure your 
 
 You will need to add the following environment variables to your `.env` file
 
-`PORT` *(default: 8001)*
+`PORT` *(default: 8001)* Port used for http 
+
+`PORT_HTTPS` Port used for https
 
 `SERVER_PROTOCOL`  *(default: https)* protocol used to fetch server APIs
 

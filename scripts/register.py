@@ -24,9 +24,11 @@ def register(url):
     if os.environ.get("URL"):
         params['url'] = os.environ.get("URL")
 
-    if os.environ.get("PORT"):
+    if os.environ.get("PORT_HTTPS"):
+        params['port'] = os.environ.get("PORT_HTTPS")
+    else if os.environ.get("PORT"):
         params['port'] = os.environ.get("PORT")
-    else :
+    else:
         params['port'] = 8001
 
     SERVER_REGISTER_URL = SERVER_REGISTER_URL + parse.urlencode(params)
