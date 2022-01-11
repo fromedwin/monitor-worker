@@ -26,7 +26,7 @@ def register(url):
 
     if os.environ.get("PORT_HTTPS"):
         params['port'] = os.environ.get("PORT_HTTPS")
-    else if os.environ.get("PORT"):
+    elif os.environ.get("PORT"):
         params['port'] = os.environ.get("PORT")
     else:
         params['port'] = 8001
