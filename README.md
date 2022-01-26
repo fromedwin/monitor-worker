@@ -4,7 +4,7 @@ This project is **alpha** quality. We don't yet guarantee stability, data integr
 
 # Monitor-client fromedwin
 
-This project is a monitoring client for the monitor [fromedwin project]().
+This project is a monitoring client for the monitor [fromedwin project](https://github.com/fromedwin/monitor).
 
 
 ## Installation
