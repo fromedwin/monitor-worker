@@ -6,6 +6,7 @@ This project is **alpha** quality. We don't yet guarantee stability, data integr
 
 This project is a monitoring client for the monitor [fromedwin project](https://github.com/fromedwin/monitor).
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/fromedwin/monitor-client/blob/main/LICENSE)
 
 ## Installation
 
