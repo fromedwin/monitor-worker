@@ -23,13 +23,13 @@ This project is a worker for the monitor [fromedwin project](https://github.com/
 Clone the project
 
 ```bash
-  git clone https://github.com/fromedwin/monitor-client.git
+  git clone https://github.com/fromedwin/monitor-worker.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd monitor-client
+  cd monitor-worker
 ```
 
 Start the server
