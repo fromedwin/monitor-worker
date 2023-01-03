@@ -1,10 +1,10 @@
-# Please note
+> **Warning**  
+> 
+> This project is **alpha** quality. We don't yet guarantee stability, data integrity or a clean upgrade path. Only use this project if you are interested in experimenting with it.
 
-This project is **alpha** quality. We don't yet guarantee stability, data integrity or a clean upgrade path. Only use this project if you are interested in experimenting with it.
+# Monitor-worker fromedwin
 
-# Monitor-client fromedwin
-
-This project is a monitoring client for the monitor [fromedwin project](https://github.com/fromedwin/monitor).
+This project is a worker for the monitor [fromedwin project](https://github.com/fromedwin/monitor).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/fromedwin/monitor-client/blob/main/LICENSE)
 
