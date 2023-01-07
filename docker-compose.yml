@@ -1,6 +1,7 @@
 version: "3.9"  # optional since v1.27.0
 services:
   nginx:
+    container_name: monitor_worker_nginx
     image: "nginx:alpine"
     ports:
       - "${PORT:-8001}:80"
@@ -14,17 +15,25 @@ services:
       - ./.htpasswd:/etc/nginx/.htpasswd:ro
     volumes_from:
       - prometheus
+      - alertmanager
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   certbot:
+    container_name: monitor_worker_certbot
     image: certbot/certbot
+    profiles:
+      - prod
     volumes:  
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
   prometheus:
+    container_name: monitor_worker_prometheus
     image: prom/prometheus:v2.30.3
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus/data'
+      # - '--web.route-prefix=/prometheus'
+      # - '--web.listen-address=:8001'
       - '--web.enable-lifecycle'
     volumes:
       - ./data/prometheus:/prometheus
@@ -33,21 +42,36 @@ services:
     links:
       - blackbox
     user: root
+  alertmanager:
+    container_name: monitor_worker_alertmanager
+    image: quay.io/prometheus/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager/data'
+    volumes:
+      - ./data/alertmanager:/alertmanager
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
   blackbox:
+    container_name: monitor_worker_blackbox
     image: prom/blackbox-exporter:v0.19.0
     command:
       - '--config.file=/etc/prometheus/blackbox.yml'
     user: "65534"
     volumes:
-      - ./prometheus/blackbox.yml:/etc/prometheus/blackbox.yml:ro
+      - ./blackbox/blackbox.yml:/etc/prometheus/blackbox.yml:ro
   heartbeats:
+    container_name: monitor_worker_heartbeats
     image: python:latest
     volumes:
-      - .:/etc/monitor-client
+      - .:/etc/monitor-worker
+      #host.docker.internal:127.0.0.1 for linux
     environment:
       - UUID=${UUID}
       - SERVER=${SERVER}
       - PROTOCOL=${SERVER_PROTOCOL}
-    entrypoint: /etc/monitor-client/heartbeats/docker-entrypoint.sh
+      - PYTHONUNBUFFERED=1
+    entrypoint: /etc/monitor-worker/heartbeats/docker-entrypoint.sh
+    ports:
+      - "80:80"
 volumes:
   logvolume01: {}
