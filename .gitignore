@@ -137,6 +137,6 @@ data/
 
 # nginx authentication
 .htpasswd
-
+alertmanager/
 prometheus/alerts
 prometheus/prometheus.yml

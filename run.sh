@@ -43,6 +43,7 @@ fi
 
 echo "🟢 - Load config prometheus"
 mkdir -p prometheus/alerts
+mkdir -p alertmanager
 python3 scripts/load_config.py
 
 # IF load-config.py return code 0
