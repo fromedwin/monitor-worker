@@ -22,6 +22,7 @@ def load_config(url=None):
 
     SERVER_PROMETHEUS_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/prometheus/{UUID}'
     SERVER_ALERTS_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/alerts/{UUID}'
+    SERVER_ALERTMANAGER_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/alertmanager/{UUID}'
 
     # Fetch PROMETHEUS configuration files
     print(f'Loading PROMETHEUS configuration files at {SERVER_PROMETHEUS_CONFIG_URL}')
@@ -48,6 +49,20 @@ def load_config(url=None):
         content = response.text
         print(f'> Alerts have been loaded from {SERVER_URL}')
         with open(f'{os.path.dirname( __file__ )}/../prometheus/alerts/alerts.yml', 'w') as file:
+            file.write(content)
+            file.close()
+
+    print(f'Loading ALERTMANAGER configuration files at {SERVER_ALERTMANAGER_CONFIG_URL}')
+    # Fetch ALERTS configuration files
+    try:
+        response = requests.get(SERVER_ALERTMANAGER_CONFIG_URL, headers=headers)
+        response.raise_for_status()
+    except Exception as err:
+        raise Exception(f'Error occurred: {err}')
+    else:
+        content = response.text
+        print(f'> Alertmanager have been loaded from {SERVER_URL}')
+        with open(f'{os.path.dirname( __file__ )}/../alertmanager/alertmanager.yml', 'w') as file:
             file.write(content)
             file.close()
 
