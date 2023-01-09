@@ -74,6 +74,12 @@ def load_config(url=None):
             response.raise_for_status()
         except Exception as err:
             pass
+
+        try:
+            response = requests.post('http://alertmanager:9093/-/reload', headers=headers)
+            response.raise_for_status()
+        except Exception as err:
+            pass
         last_load = now
 
 if __name__== "__main__" :
