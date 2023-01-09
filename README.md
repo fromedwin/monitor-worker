@@ -58,7 +58,14 @@ You will need to add the following environment variables to your `.env` file
 
 `URL` url used to access application
 
-  
+## NGINX
+
+Add extra entrypoint to install `logrotate` on start and start `crond`.
+
+Define nginx configuration from `logrotate/docker-nginx` within `/etc/logrotate.d/nginx`.
+
+Override `bin` using `nginx/logrotate/logrotate.sh` as `/etc/conf.d/logrotate`.
+
 ## Feedback
 
 If you have any feedback, please reach out to us at fromedwin@sebastienbarbier.com

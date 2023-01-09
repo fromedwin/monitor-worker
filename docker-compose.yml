@@ -13,10 +13,13 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
       - ./.htpasswd:/etc/nginx/.htpasswd:ro
+      # Setup logrotate with install, config, and daily script to run 
+      - ./nginx/logrotate/entrypoint.sh:/docker-entrypoint.d/31-logrotate.sh
+      - ./nginx/logrotate/logrotate.sh:/etc/conf.d/logrotate
+      - ./nginx/logrotate/docker-nginx:/etc/logrotate.d/nginx
     volumes_from:
       - prometheus
       - alertmanager
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   certbot:
     container_name: monitor_worker_certbot
     image: certbot/certbot
@@ -64,7 +67,6 @@ services:
     image: python:latest
     volumes:
       - .:/etc/monitor-worker
-      #host.docker.internal:127.0.0.1 for linux
     environment:
       - UUID=${UUID}
       - SERVER=${SERVER}
