@@ -1,7 +1,3 @@
-> **Warning**  
-> 
-> This project is **alpha** quality. We don't yet guarantee stability, data integrity or a clean upgrade path. Only use this project if you are interested in experimenting with it.
-
 # Monitor-worker fromedwin
 
 This project is a worker for the monitor [fromedwin project](https://github.com/fromedwin/monitor).
@@ -14,51 +10,35 @@ This project is a worker for the monitor [fromedwin project](https://github.com/
 
 ### Dependancies
 
+This project
+
 ```bash
   sudo apt install python3-pip apache2-utils
 ```
 
-## Run Locally
-
-Clone the project
+## Development environment
 
 ```bash
   git clone https://github.com/fromedwin/monitor-worker.git
-```
-
-Go to the project directory
-
-```bash
   cd monitor-worker
-```
-
-Start the server
-
-```bash
   ./run.sh
 ```
-  
+
 ## Environment Variables
 
 No variables are required to run locally, but might be needed to configure your production environment
 
 You will need to add the following environment variables to your `.env` file
 
-`PORT` *(default: 8001)* Port used for http 
+`SERVER_URL` (default `http://host.docker.internal:8000`): URL to reach [fromedwin/monitor](https://github.com/fromedwin/monitor) instance.
 
-`PORT_HTTPS` Port used for https
+`WORKER_URL` (default `http://localhost:8001`): Worker needs to be reach by the server, this is the url used to generated the https certificate.
 
-`SERVER_PROTOCOL`  *(default: https)* protocol used to fetch server APIs
+`WEBAUTH_USERNAME` (optional) username to protect none public access. If none, it is randomly generated.
 
-`SERVER`  *(default: localhost:8000)* url to fetch server APIs to regsiter (run lcoally outside of docker)
+`WEBAUTH_PASSWORD` (optional) password to protect none public access. If none, it is randomly generated.
 
-`WEBAUTH_USERNAME` username to protect none public access
-
-`WEBAUTH_PASSWORD` password to protect none public access
-
-`URL` url used to access application
-
-## NGINX
+## Nginx logs
 
 Add extra entrypoint to install `logrotate` on start and start `crond`.
 
@@ -66,15 +46,19 @@ Define nginx configuration from `logrotate/docker-nginx` within `/etc/logrotate.
 
 Override `bin` using `nginx/logrotate/logrotate.sh` as `/etc/conf.d/logrotate`.
 
-## Feedback
+## Deploy to production
 
-If you have any feedback, please reach out to us at fromedwin@sebastienbarbier.com
+```bash
+  git clone https://github.com/fromedwin/monitor-worker.git
+  cd monitor-worker
+  echo "SERVER_URL=https://server.example.com" >> .env
+  echo "WORKER_URL=https://worker.example.com" >> .env
+  ./run.sh -prod
+```
 
-  
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
 
 ## Resources
 

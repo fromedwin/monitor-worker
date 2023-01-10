@@ -11,8 +11,8 @@ echo '🟢 - Install dependencies ⚙️'
 pip3 install -r requirements.txt
 
 echo '🟢 - Load .env file'
-touch .env
-source .env
+touch .env # Will creat .env if it does not exist
+source .env # Load .env variables
 
 # Set default port to access monitor-client web interface
 if [[ -z "${PORT}" ]]; then export PORT=8001
@@ -97,12 +97,12 @@ else
 
     # IF load-config.py return code 0
     if [ $? -ne 0 ]; then
-      echo "❌ Docker might not be running."
+      echo "🔴 Docker might not be running."
       exit
     fi
 
   else
-    echo "Run in main thread (use -d to run as deamon)"
+    echo "⚠️ Running as main thread (use -d to run as deamon)"
     docker-compose up
   fi
 

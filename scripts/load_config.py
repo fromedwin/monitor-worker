@@ -4,27 +4,20 @@ import json
 from dotenv import load_dotenv
 import datetime
 
-last_load = datetime.datetime.now()
-
 headers = {
     'User-Agent': 'FromEdwinBot Python load_config',
 }
 
+# Fetch Prometheur, alertmanager, and alert rules from server_url
 def load_config(url=None):
 
-    global last_load
-
-    # Load varriables from .env
-    load_dotenv()
-    SERVER_PROTOCOL = 'http' # if os.environ.get("PRODUCTION") == '0' else 'https'
-    SERVER_URL = url or os.environ.get("SERVER")
+    # Server url
+    SERVER_URL = url or os.environ.get("SERVER_URL")
+    # worked id to fetch  assigned config files
     UUID = os.environ.get("UUID")
 
-    SERVER_PROMETHEUS_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/prometheus/{UUID}'
-    SERVER_ALERTS_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/alerts/{UUID}'
-    SERVER_ALERTMANAGER_CONFIG_URL = f'{SERVER_PROTOCOL}://{SERVER_URL}/clients/alertmanager/{UUID}'
-
     # Fetch PROMETHEUS configuration files
+    SERVER_PROMETHEUS_CONFIG_URL = f'{SERVER_URL}/clients/prometheus/{UUID}'
     print(f'Loading PROMETHEUS configuration files at {SERVER_PROMETHEUS_CONFIG_URL}')
     try:
         response = requests.get(SERVER_PROMETHEUS_CONFIG_URL, headers=headers)
@@ -38,8 +31,9 @@ def load_config(url=None):
             file.write(content)
             file.close()
 
-    print(f'Loading ALERTS configuration files at {SERVER_ALERTS_CONFIG_URL}')
     # Fetch ALERTS configuration files
+    SERVER_ALERTS_CONFIG_URL = f'{SERVER_URL}/clients/alerts/{UUID}'
+    print(f'Loading ALERTS configuration files at {SERVER_ALERTS_CONFIG_URL}')
     try:
         response = requests.get(SERVER_ALERTS_CONFIG_URL, headers=headers)
         response.raise_for_status()
@@ -52,8 +46,10 @@ def load_config(url=None):
             file.write(content)
             file.close()
 
-    print(f'Loading ALERTMANAGER configuration files at {SERVER_ALERTMANAGER_CONFIG_URL}')
+
     # Fetch ALERTS configuration files
+    SERVER_ALERTMANAGER_CONFIG_URL = f'{SERVER_URL}/clients/alertmanager/{UUID}'
+    print(f'Loading ALERTMANAGER configuration files at {SERVER_ALERTMANAGER_CONFIG_URL}')
     try:
         response = requests.get(SERVER_ALERTMANAGER_CONFIG_URL, headers=headers)
         response.raise_for_status()
@@ -66,21 +62,23 @@ def load_config(url=None):
             file.write(content)
             file.close()
 
-    now = datetime.datetime.now()
+    # When all config files are locally stored, 
+    # script notify prometheus and alertmanager to reload.
+    try:
+        response = requests.post('http://prometheus:9090/-/reload', headers=headers)
+        response.raise_for_status()
+    except Exception as err:
+        print(f'Prometheus reload failed: {err}')
 
-    if (now - last_load).seconds >= 30:
-        try:
-            response = requests.post('http://prometheus:9090/-/reload', headers=headers)
-            response.raise_for_status()
-        except Exception as err:
-            pass
-
-        try:
-            response = requests.post('http://alertmanager:9093/-/reload', headers=headers)
-            response.raise_for_status()
-        except Exception as err:
-            pass
-        last_load = now
+    try:
+        response = requests.post('http://alertmanager:9093/-/reload', headers=headers)
+        response.raise_for_status()
+    except Exception as err:
+        print(f'Alertmanager reload failed: {err}')
 
 if __name__== "__main__" :
-    load_config(os.environ.get("SERVER") or 'localhost:8000')
+
+    # Load varriables from .env
+    load_dotenv()
+
+    load_config(os.environ.get("SERVER_URL") or 'http://localhost:8000')

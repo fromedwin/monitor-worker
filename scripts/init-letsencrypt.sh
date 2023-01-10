@@ -6,7 +6,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
 fi
 
 # domains=(sebastienbarbier.com www.sebastienbarbier.com)
-domains=($DOMAIN)
+domains=($(echo $WORKER_URL | sed -e 's,^.*://,,' -e 's,/.*$,,')) # extract domain from a URL
 rsa_key_size=4096
 data_path="./certbot"
 email=$MAIL # Adding a valid address is strongly recommended

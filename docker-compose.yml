@@ -35,9 +35,7 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus/data'
-      # - '--web.route-prefix=/prometheus'
-      # - '--web.listen-address=:8001'
-      - '--web.enable-lifecycle'
+      - '--web.enable-lifecycle' # Enable /-/reload entrypoint
     volumes:
       - ./data/prometheus:/prometheus
       - ./prometheus/alerts:/etc/prometheus/alerts
@@ -69,8 +67,8 @@ services:
       - .:/etc/monitor-worker
     environment:
       - UUID=${UUID}
-      - SERVER=${SERVER}
-      - PROTOCOL=${SERVER_PROTOCOL}
+      - SERVER_URL=${SERVER_URL}
+      - WORKER_URL=${WORKER_URL}
       - PYTHONUNBUFFERED=1
     entrypoint: /etc/monitor-worker/heartbeats/docker-entrypoint.sh
     ports:
