@@ -11,7 +11,7 @@ headers = {
 # Fetch Prometheur, alertmanager, and alert rules from server_url
 def load_config(url=None):
 
-    dotenv.load_dotenv()
+    load_dotenv()
 
     # Server url
     SERVER_URL = url or os.environ.get("SERVER_URL")
