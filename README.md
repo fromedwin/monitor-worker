@@ -53,7 +53,6 @@ Override `bin` using `nginx/logrotate/logrotate.sh` as `/etc/conf.d/logrotate`.
   cd monitor-worker
   echo "SERVER_URL=https://server.example.com" >> .env
   echo "WORKER_URL=https://worker.example.com" >> .env
-  ./run.sh -prod
 ```
 
 ## License

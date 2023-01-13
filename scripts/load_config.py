@@ -11,6 +11,8 @@ headers = {
 # Fetch Prometheur, alertmanager, and alert rules from server_url
 def load_config(url=None):
 
+    dotenv.load_dotenv()
+
     # Server url
     SERVER_URL = url or os.environ.get("SERVER_URL")
     # worked id to fetch  assigned config files
@@ -77,8 +79,5 @@ def load_config(url=None):
         print(f'Alertmanager reload failed: {err}')
 
 if __name__== "__main__" :
-
-    # Load varriables from .env
-    load_dotenv()
 
     load_config(os.environ.get("SERVER_URL") or 'http://localhost:8000')

@@ -9,6 +9,9 @@ DEFAULT_SERVER_URL = 'http://localhost:8000'
 DEFAULT_WORKER_URL = 'http://localhost:8001'
 
 def register(url):
+
+    dotenv.load_dotenv()
+    
     # Register function send to the server details about how to access it (url, username, password).
     # It receive back its unique identifier and store it within the .env file.
 
@@ -50,8 +53,6 @@ def register(url):
         raise Exception(f'Error occurred: {err}')
 
 if __name__== "__main__" :
-    # Load varriables from .env
-    dotenv.load_dotenv()
 
     # Send register request
     register(DEFAULT_SERVER_URL)
