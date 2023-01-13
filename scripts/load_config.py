@@ -14,7 +14,7 @@ def load_config(url=None):
     load_dotenv()
 
     # Server url
-    SERVER_URL = url or os.environ.get("SERVER_URL")
+    SERVER_URL = os.environ.get("SERVER_URL") or url
     # worked id to fetch  assigned config files
     UUID = os.environ.get("UUID")
 
