@@ -52,6 +52,7 @@ services:
     volumes:
       - ./data/alertmanager:/alertmanager
       - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    user: root
   blackbox:
     container_name: monitor_worker_blackbox
     image: prom/blackbox-exporter:v0.19.0
@@ -71,7 +72,5 @@ services:
       - WORKER_URL=${WORKER_URL}
       - PYTHONUNBUFFERED=1
     entrypoint: /etc/monitor-worker/heartbeats/docker-entrypoint.sh
-    ports:
-      - "80:80"
 volumes:
   logvolume01: {}

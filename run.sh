@@ -58,12 +58,12 @@ if [[ $@ == *"-prod"* ]]; then
   echo "🟢 - 🚀💰 - Start as production instance"
   export NGINX="production" # Will load nginx/production/*.conf files
 
-  if [[ $DOMAIN == *"localhost"* ]]; then
+  if [[ $SERVER_URL == *"localhost"* ]]; then
     echo 'You need to define a custom domain other than localhost or host.docker.internal'
     exit
   fi
 
-  if [[ $DOMAIN == *"host.docker.internal"* ]]; then
+  if [[ $SERVER_URL == *"host.docker.internal"* ]]; then
     echo 'You need to define a custom domain other than localhost or host.docker.internal'
     exit
   fi
