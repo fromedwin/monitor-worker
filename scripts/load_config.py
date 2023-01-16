@@ -19,7 +19,7 @@ def load_config(url=None):
     UUID = os.environ.get("UUID")
 
     # Fetch PROMETHEUS configuration files
-    SERVER_PROMETHEUS_CONFIG_URL = f'{SERVER_URL}/clients/prometheus/{UUID}'
+    SERVER_PROMETHEUS_CONFIG_URL = f'{SERVER_URL}/clients/prometheus/{UUID}/'
     print(f'Loading PROMETHEUS configuration files at {SERVER_PROMETHEUS_CONFIG_URL}')
     try:
         response = requests.get(SERVER_PROMETHEUS_CONFIG_URL, headers=headers)
@@ -34,7 +34,7 @@ def load_config(url=None):
             file.close()
 
     # Fetch ALERTS configuration files
-    SERVER_ALERTS_CONFIG_URL = f'{SERVER_URL}/clients/alerts/{UUID}'
+    SERVER_ALERTS_CONFIG_URL = f'{SERVER_URL}/clients/alerts/{UUID}/'
     print(f'Loading ALERTS configuration files at {SERVER_ALERTS_CONFIG_URL}')
     try:
         response = requests.get(SERVER_ALERTS_CONFIG_URL, headers=headers)
@@ -50,7 +50,7 @@ def load_config(url=None):
 
 
     # Fetch ALERTS configuration files
-    SERVER_ALERTMANAGER_CONFIG_URL = f'{SERVER_URL}/clients/alertmanager/{UUID}'
+    SERVER_ALERTMANAGER_CONFIG_URL = f'{SERVER_URL}/clients/alertmanager/{UUID}/'
     print(f'Loading ALERTMANAGER configuration files at {SERVER_ALERTMANAGER_CONFIG_URL}')
     try:
         response = requests.get(SERVER_ALERTMANAGER_CONFIG_URL, headers=headers)

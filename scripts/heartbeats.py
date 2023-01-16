@@ -21,7 +21,7 @@ load_dotenv()
 # Collect and generate vars
 SERVER_URL = os.environ.get("SERVER_URL") or 'http://host.docker.internal:8000'
 UUID = os.environ.get("UUID")
-SERVER_HEARTBEATS_URL = f'{SERVER_URL}/clients/heartbeat/{UUID}'
+SERVER_HEARTBEATS_URL = f'{SERVER_URL}/clients/heartbeat/{UUID}/'
 
 print(f'Heartbeat to {SERVER_HEARTBEATS_URL}')
 
