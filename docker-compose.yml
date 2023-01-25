@@ -68,9 +68,19 @@ services:
       - .:/etc/monitor-worker
     environment:
       - UUID=${UUID}
-      - SERVER_URL=${SERVER_URL}
-      - WORKER_URL=${WORKER_URL}
+      - SERVER_URL=${SERVER_URL-}
+      - WORKER_URL=${WORKER_URL-}
       - PYTHONUNBUFFERED=1
     entrypoint: /etc/monitor-worker/heartbeats/docker-entrypoint.sh
+  lighthouse:
+    container_name: monitor_worker_lighthouse
+    image: node:19-alpine
+    volumes:
+      - .:/etc/monitor-worker
+    environment:
+      - UUID=${UUID}
+      - SERVER_URL=${SERVER_URL-}
+      - WORKER_URL=${WORKER_URL-}
+    command: ['sh', '/etc/monitor-worker/lighthouse/entrypoint.sh']
 volumes:
   logvolume01: {}
