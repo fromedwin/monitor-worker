@@ -140,3 +140,6 @@ data/
 alertmanager/
 prometheus/alerts
 prometheus/prometheus.yml
+
+lighthouse/node_modules/
+lighthouse/report.json
