@@ -4,7 +4,8 @@ const fs = require('fs');
 let UUID = process.env.UUID;
 let SERVER_URL = process.env.SERVER_URL || 'http://host.docker.internal:8000';
 
-let url = `${SERVER_URL}/performance/next/`
+// Request performance object entrypoint
+let url = `${SERVER_URL}/api/request/${UUID}/performance`
 
 async function runPerformanceTask () {
 
@@ -24,7 +25,7 @@ async function runPerformanceTask () {
 				const json = await report.json();
 
 				// Save received report as json (TODO: delete)
-				fs.writeFile('report.json', JSON.stringify(json.lighthouseResult, null, 2), (err) => {
+				fs.writeFile(`report-${data.performance.pk}.json`, JSON.stringify(json.lighthouseResult, null, 2), (err) => {
 					if (err) {
 						throw err;
 					}
@@ -34,12 +35,15 @@ async function runPerformanceTask () {
 				// Wait 1 seconds before next request
 				await new Promise(resolve => setTimeout(resolve, 1000));
 			} else {
+				console.log('Wait for 5 seconds');
 				// Wait 5 seconds before next request
 				await new Promise(resolve => setTimeout(resolve, 5000));
 			}
 		} catch (error) {
 			console.error(error);
-			break;
+			console.log('Wait for 10 seconds');
+			// Wait 5 seconds before next request
+			await new Promise(resolve => setTimeout(resolve, 10000));
 		}
 	}
 }
