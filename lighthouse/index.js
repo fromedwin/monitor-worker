@@ -28,14 +28,6 @@ async function runPerformanceTask () {
 				const report = await fetch(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${data.performance.url}&category=accessibility&category=best-practices&category=performance&category=pwa&category=seo`);
 				const json = await report.json();
 
-				// Save received report as json (TODO: delete)
-				// fs.writeFile(`report-${data.performance.pk}.json`, JSON.stringify(json.lighthouseResult, null, 2), (err) => {
-				// 	if (err) {
-				// 		throw err;
-				// 	}
-				// 	console.log("File has been created");
-				// });
-
 				// Send report to server
 				const reportResponse = await fetch(`${SERVER_URL}/api/report/${UUID}/performance/${data.performance.pk}`, {
 					method: 'POST',
