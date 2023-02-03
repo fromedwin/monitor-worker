@@ -81,6 +81,7 @@ services:
       - UUID=${UUID}
       - SERVER_URL=${SERVER_URL-}
       - WORKER_URL=${WORKER_URL-}
+      - ENABLE_LIGHTHOUSE=${ENABLE_LIGHTHOUSE-0}
     command: ['sh', '/etc/monitor-worker/lighthouse/entrypoint.sh']
 volumes:
   logvolume01: {}
