@@ -29,12 +29,12 @@ async function runPerformanceTask () {
 				const json = await report.json();
 
 				// Save received report as json (TODO: delete)
-				fs.writeFile(`report-${data.performance.pk}.json`, JSON.stringify(json.lighthouseResult, null, 2), (err) => {
-					if (err) {
-						throw err;
-					}
-					console.log("File has been created");
-				});
+				// fs.writeFile(`report-${data.performance.pk}.json`, JSON.stringify(json.lighthouseResult, null, 2), (err) => {
+				// 	if (err) {
+				// 		throw err;
+				// 	}
+				// 	console.log("File has been created");
+				// });
 
 				// Send report to server
 				const reportResponse = await fetch(`${SERVER_URL}/api/report/${UUID}/performance/${data.performance.pk}`, {
