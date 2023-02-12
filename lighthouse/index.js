@@ -3,6 +3,7 @@ const fs = require('fs');
 
 let UUID = process.env.UUID;
 let SERVER_URL = process.env.SERVER_URL || 'http://host.docker.internal:8000';
+const USER_AGENT = 'FromEdwinBot node lighthouse';
 
 // Request performance object entrypoint
 let url = `${SERVER_URL}/api/request/${UUID}/performance`
@@ -18,7 +19,11 @@ async function runPerformanceTask () {
 		// Fetch url from docker
 		try {
 			// Fetch next performance object to evaluate
-			const response = await fetch(url);
+			const response = await fetch(url, {
+				headers: {
+					'User-Agent': USER_AGENT,
+				}
+			});
 			const data = await response.json();
 
 			if (data && data.performance && data.performance.url) {
@@ -32,6 +37,7 @@ async function runPerformanceTask () {
 				const reportResponse = await fetch(`${SERVER_URL}/api/report/${UUID}/performance/${data.performance.pk}`, {
 					method: 'POST',
 					headers: {
+						'User-Agent': USER_AGENT,
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify(json.lighthouseResult)
