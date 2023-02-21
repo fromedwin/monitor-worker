@@ -74,7 +74,7 @@ services:
     entrypoint: /etc/monitor-worker/heartbeats/docker-entrypoint.sh
   lighthouse:
     container_name: monitor_worker_lighthouse
-    image: node:19-alpine
+    image: node:19.6-alpine3.16
     volumes:
       - .:/etc/monitor-worker
     environment:
