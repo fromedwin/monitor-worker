@@ -74,7 +74,8 @@ services:
     entrypoint: /etc/monitor-worker/heartbeats/docker-entrypoint.sh
   lighthouse:
     container_name: monitor_worker_lighthouse
-    image: node:19.6-alpine3.16
+    build: ./lighthouse
+    user: root
     volumes:
       - .:/etc/monitor-worker
     environment:
@@ -82,6 +83,7 @@ services:
       - SERVER_URL=${SERVER_URL-}
       - WORKER_URL=${WORKER_URL-}
       - ENABLE_LIGHTHOUSE=${ENABLE_LIGHTHOUSE-0}
+      - CHROME_PATH=/usr/lib/chromium/chrome
     command: ['sh', '/etc/monitor-worker/lighthouse/entrypoint.sh']
 volumes:
   logvolume01: {}

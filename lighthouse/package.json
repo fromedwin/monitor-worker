@@ -6,7 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
+  "type": "module",
   "dependencies": {
+    "lighthouse": "^10.0.1",
     "node-fetch": "^2.6.8"
   }
 }

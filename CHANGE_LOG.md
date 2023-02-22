@@ -1,4 +1,3 @@
-
 # Change Log
 All notable changes to this project will be documented in this file.
  
@@ -20,6 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 See for sample https://raw.githubusercontent.com/favoloso/conventional-changelog-emoji/master/CHANGELOG.md
 -->
-## [0.1.0] - yyyy-mm-dd
+## [1.0.0] - yyyy-mm-dd
 ### ✨ Feature
-- Deploy Loki with https nginx setup
+- Heartbeat to monitor server every 10s
+- Monitor availability of urls
+- MOnitor performance using Lighthouse
