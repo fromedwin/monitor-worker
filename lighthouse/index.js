@@ -31,6 +31,23 @@ const DESKTOP_EMULATION_METRICS = {
   disabled: false,
 };
 
+const MOTOGPOWER_EMULATION_METRICS = {
+  mobile: true,
+  width: 412,
+  height: 823,
+  // This value has some interesting ramifications for image-size-responsive, see:
+  // https://github.com/GoogleChrome/lighthouse/issues/10741#issuecomment-626903508
+  deviceScaleFactor: 1.75,
+  disabled: false,
+};
+
+const screenEmulationMetrics = {
+  mobile: MOTOGPOWER_EMULATION_METRICS,
+  desktop: DESKTOP_EMULATION_METRICS,
+};
+
+const MOTOG4_USERAGENT = 'Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36'; // eslint-disable-line max-len
+const DESKTOP_USERAGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36'; // eslint-disable-line max-len
 
 /**
  * Start infinite to start generating lighthouse reports
@@ -53,16 +70,25 @@ async function runPerformanceTask () {
 				console.log(`Running test on ${data.performance.url}`);
 
 				// Start Chrome process
-				const chrome = await chromeLauncher.launch({chromeFlags: ['--headless','--no-sandbox', '--disable-dev-shm-usage']}); //  '--disable-gpu', '--disable-setuid-sandbox'
+				const chrome = await chromeLauncher.launch({
+					ignoreDefaultFlags: true,
+					chromeFlags: [
+							'--headless',
+							'--no-sandbox',
+							'--disable-dev-shm-usage',
+							'--allow-pre-commit-input',
+							'--in-process-gpu',
+						]
+					}); //  '--disable-gpu', '--disable-setuid-sandbox'
 
 				// Running Lighthouse by custom options
 				const options = {
 					logLevel: 'info', 
 					output: 'json', 
 					port: chrome.port,
-					formFactor: 'desktop',
-					screenEmulation: DESKTOP_EMULATION_METRICS,
-					emulatedUserAgent: USER_AGENT,
+					formFactor: 'desktop', // 'desktop' or 'mobile'
+					screenEmulation: screenEmulationMetrics.desktop,
+					emulatedUserAgent: DESKTOP_USERAGENT, //MOTOG4_USERAGENT,
 					skipAudits: [
 					    // Skip the h2 audit so it doesn't lie to us. See https://github.com/GoogleChrome/lighthouse/issues/6539
 					    'uses-http2',

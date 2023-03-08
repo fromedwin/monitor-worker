@@ -8,7 +8,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "lighthouse": "^10.0.1",
+    "lighthouse": "^10.0.2",
     "node-fetch": "^2.6.8"
   }
 }
