@@ -2,5 +2,6 @@ modules:
   http_2xx:
     prober: http
     http:
+      preferred_ip_protocol: "ip4"
       headers:
         User-Agent: "FromEdwinBot Prometheus Blackbox Go-http-client/1.1"
