@@ -20,6 +20,7 @@ services:
     volumes_from:
       - prometheus
       - alertmanager
+      - heartbeats
   certbot:
     container_name: monitor_worker_certbot
     image: certbot/certbot
