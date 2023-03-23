@@ -6,6 +6,15 @@ modules:
       preferred_ip_protocol: "ip4"
       ip_protocol_fallback: false
       no_follow_redirects: false
+      headers:
+        User-Agent: "FromEdwinBot Prometheus Blackbox Go-http-client/1.1"
+  http_2xx_unsecure:
+    prober: http
+    http:
+      method: GET
+      preferred_ip_protocol: "ip4"
+      ip_protocol_fallback: false
+      no_follow_redirects: false
       tls_config:
         insecure_skip_verify: true
       headers:
