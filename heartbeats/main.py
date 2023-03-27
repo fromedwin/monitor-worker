@@ -35,10 +35,12 @@ def read_availability(application_id: int, duration: Union[int, None] = 600):
         'services': {}, # Create dict with service_id as index {35: '', 70: '', ...}
         'errors': {},
     }
+    # Define start value on each request
+    start = datetime.datetime.now().timestamp()
 
     # Get http code for each service
     try:
-        http_status_code = get_probe_http_status_code(url, application_id)
+        http_status_code = get_probe_http_status_code(url, application_id, start)
         # Initialise list of service based on status_code value
         for service_id in http_status_code:
             result['services'][service_id] = {
@@ -49,7 +51,7 @@ def read_availability(application_id: int, duration: Union[int, None] = 600):
 
     # Get http version for each service
     try:
-        http_status_version = get_probe_http_version(url, application_id)
+        http_status_version = get_probe_http_version(url, application_id, start)
         # Initialise list of service based on status_code value
         for service_id in http_status_version:
             result['services'][service_id]['http_version'] = http_status_version[service_id]['http_version']
@@ -58,7 +60,7 @@ def read_availability(application_id: int, duration: Union[int, None] = 600):
 
     # Get number of redirection
     try:
-        http_redirects = get_probe_http_redirects(url, application_id)
+        http_redirects = get_probe_http_redirects(url, application_id, start)
         # Initialise list of service based on status_code value
         for service_id in http_redirects:
             result['services'][service_id]['http_redirects'] = http_redirects[service_id]['http_redirects']
@@ -67,7 +69,7 @@ def read_availability(application_id: int, duration: Union[int, None] = 600):
 
     # Get each ping duration
     try:
-        duration_seconds = get_probe_duration_seconds(url, application_id, duration)
+        duration_seconds = get_probe_duration_seconds(url, application_id, start, duration)
         for service_id in duration_seconds:
             result['services'][service_id]['duration_seconds'] = duration_seconds[service_id]['duration_seconds']
     except Exception as err:
@@ -75,7 +77,7 @@ def read_availability(application_id: int, duration: Union[int, None] = 600):
 
     # Get HTTPS certificate expiry as timestamp
     try:
-        ssl_earliest_cert_expiry = get_probe_ssl_earliest_cert_expiry(url, application_id)
+        ssl_earliest_cert_expiry = get_probe_ssl_earliest_cert_expiry(url, application_id, start)
         for service_id in ssl_earliest_cert_expiry:
             result['services'][service_id]['ssl_earliest_cert_expiry'] = ssl_earliest_cert_expiry[service_id]
     except Exception as err:
@@ -83,7 +85,7 @@ def read_availability(application_id: int, duration: Union[int, None] = 600):
 
     # Get HTTPS certificate expiry as timestamp
     try:
-        tls_version_info = get_probe_tls_version_info(url, application_id)
+        tls_version_info = get_probe_tls_version_info(url, application_id, start)
         for service_id in tls_version_info:
             result['services'][service_id]['tls_version_info'] = tls_version_info[service_id]
     except Exception as err:

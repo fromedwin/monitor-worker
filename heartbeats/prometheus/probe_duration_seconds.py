@@ -2,7 +2,7 @@ import requests
 import json
 import datetime
 
-def get_probe_duration_seconds(url, id, duration=600, start=datetime.datetime.now().timestamp()):
+def get_probe_duration_seconds(url, id, start, duration=600):
     """
         Fetch prometheus probe duration seconds data
     """
@@ -23,6 +23,8 @@ def get_probe_duration_seconds(url, id, duration=600, start=datetime.datetime.no
     for service_id in response:
         for i in range(len(response[service_id]['duration_seconds'])):
             response[service_id]['duration_seconds'][i][0] = int(response[service_id]['duration_seconds'][i][0])
+            # From timestamp to datetime in python
+            response[service_id]['duration_seconds'][i][0] = datetime.datetime.fromtimestamp(int(response[service_id]['duration_seconds'][i][0]))
             response[service_id]['duration_seconds'][i][1] = float(response[service_id]['duration_seconds'][i][1])
 
     return response
