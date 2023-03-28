@@ -71,7 +71,9 @@ def read_availability(application_id: int, duration: Union[int, None] = 600):
     try:
         duration_seconds = get_probe_duration_seconds(url, application_id, start, duration)
         for service_id in duration_seconds:
-            result['services'][service_id]['duration_seconds'] = duration_seconds[service_id]['duration_seconds']
+            if service_id in result['services']:
+                result['services'][service_id]['duration_seconds'] = duration_seconds[service_id]['duration_seconds']
+
     except Exception as err:
         result['errors']['get_probe_duration_seconds'] = getattr(err, 'message', repr(err))
 
