@@ -36,7 +36,6 @@ def get_probe_duration_seconds(url, id, start, duration=600):
             response[service_id]['duration_seconds'][i][0] = int(response[service_id]['duration_seconds'][i][0])
             # From timestamp to datetime in python
             response[service_id]['duration_seconds'][i][0] = datetime.datetime.fromtimestamp(int(response[service_id]['duration_seconds'][i][0]))
-            response[service_id]['duration_seconds'][i][1] = float(response[service_id]['duration_seconds'][i][1])
-
+            response[service_id]['duration_seconds'][i][1] = round(float(response[service_id]['duration_seconds'][i][1])*100, 2)
 
     return response
