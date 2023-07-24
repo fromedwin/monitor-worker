@@ -2,11 +2,9 @@ import requests
 import json
 import datetime
 
-def get_probe_duration_seconds(url, id, start, duration=600):
-    """
-        Fetch prometheus probe duration seconds data
-    """
-    response = requests.get(f'{url}/api/v1/query_range?query=probe_duration_seconds%7Bapplication="{id}"%7D&step=60&start={str(start-duration)}&end={str(start)}')
+
+def query(url, type, id, start, duration=600)  :
+    response = requests.get(f'{url}/api/v1/query_range?query=probe_duration_seconds%7B{type}="{id}"%7D&step=60&start={str(start-duration)}&end={str(start)}')
     response.raise_for_status()
     content = json.loads(response.content)
 
@@ -39,3 +37,16 @@ def get_probe_duration_seconds(url, id, start, duration=600):
             response[service_id]['duration_seconds'][i][1] = round(float(response[service_id]['duration_seconds'][i][1])*100, 2)
 
     return response
+
+def get_probe_duration_seconds(url, id, start, duration=600):
+    """
+        Fetch prometheus probe duration seconds data
+    """
+    return query(url, 'application', id, start, duration)
+
+
+def get_probe_duration_seconds_user(url, id, start, duration=600):
+    """
+        Fetch prometheus probe duration seconds data
+    """
+    return query(url, 'user', id, start, duration)

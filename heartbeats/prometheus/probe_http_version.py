@@ -2,11 +2,11 @@ import requests
 import json
 import datetime
 
-def get_probe_http_version(url, id, start=datetime.datetime.now().timestamp()):
+def query(url, type, id, start=datetime.datetime.now().timestamp()):
     """
         Fetch prometheus probe duration seconds data
     """
-    response = requests.get(f'{url}/api/v1/query?query=probe_http_version%7Bapplication="{id}"%7D&time={str(start)}')
+    response = requests.get(f'{url}/api/v1/query?query=probe_http_version%7B{type}="{id}"%7D&time={str(start)}')
     response.raise_for_status()
     content = json.loads(response.content)
 
@@ -19,3 +19,10 @@ def get_probe_http_version(url, id, start=datetime.datetime.now().timestamp()):
         }
 
     return response
+
+
+def get_probe_http_version(url, id, start=datetime.datetime.now().timestamp()):
+    return query(url, 'application', id, start)
+
+def get_probe_http_version_user(url, id, start=datetime.datetime.now().timestamp()):
+    return query(url, 'user', id, start)
