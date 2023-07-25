@@ -17,8 +17,8 @@ const USER_AGENT = 'FromEdwinBot node lighthouse';
 // Request performance object entrypoint
 let url = `${SERVER_URL}/api/request/${UUID}/performance`
 
-if (process.env.ENABLE_LIGHTHOUSE == 0) {
-	console.log('ENABLE_LIGHTHOUSE == 0, disabling lighthouse report');
+if (process.env.DISABLE_LIGHTHOUSE == 1) {
+	console.log('❌  DISABLE_LIGHTHOUSE == 1, disabling lighthouse report');
 	process.exit(1);
 }
 

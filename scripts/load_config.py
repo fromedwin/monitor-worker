@@ -13,6 +13,12 @@ def load_config(url=None):
 
     load_dotenv()
 
+    DISABLE_PROMETHEUS = os.environ.get("DISABLE_PROMETHEUS", '0')
+
+    if DISABLE_PROMETHEUS == '1' or DISABLE_PROMETHEUS == 1:
+        print('❌ DISABLE_PROMETHEUS == 1, disabling prometheus monitoring')
+        return
+
     # Server url
     SERVER_URL = os.environ.get("SERVER_URL") or url
     # worked id to fetch  assigned config files
