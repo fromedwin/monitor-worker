@@ -83,8 +83,8 @@ services:
       - UUID=${UUID}
       - SERVER_URL=${SERVER_URL-}
       - WORKER_URL=${WORKER_URL-}
-      - DISABLE_PROMETHEUS=${DISABLE_PROMETHEUS-0}
-      - DISABLE_LIGHTHOUSE=${DISABLE_LIGHTHOUSE-0}
+      - DISABLE_MONITORING=${DISABLE_MONITORING-0}
+      - DISABLE_PERFORMANCE=${DISABLE_PERFORMANCE-0}
       - CHROME_PATH=/usr/lib/chromium/chrome
     command: ['sh', '/etc/monitor-worker/lighthouse/entrypoint.sh']
 volumes:

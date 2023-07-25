@@ -24,8 +24,8 @@ SERVER_URL = os.environ.get("SERVER_URL") or 'http://host.docker.internal:8000'
 UUID = os.environ.get("UUID")
 SERVER_HEARTBEATS_URL = f'{SERVER_URL}/clients/heartbeat/{UUID}/'
 
-IS_PROMETHEUS_ENABLE = os.environ.get("DISABLE_PROMETHEUS", '0') == '0'
-IS_LIGHTHOUSE_ENABLE = os.environ.get("DISABLE_LIGHTHOUSE", '0') == '0'
+IS_MONITORING_ENABLE = os.environ.get("DISABLE_MONITORING", '0') == '0'
+IS_PERFORMANCE_ENABLE = os.environ.get("DISABLE_PERFORMANCE", '0') == '0'
 
 HEADERS = {
     'User-Agent': 'FromEdwinBot Python heartbeats',
@@ -54,10 +54,10 @@ if __name__ == '__main__':
 
             payload = {}
 
-            if not IS_LIGHTHOUSE_ENABLE:
-                payload['lighthouse'] = 0
-            if not IS_PROMETHEUS_ENABLE:
-                payload['prometheus'] = 0
+            if not IS_MONITORING_ENABLE:
+                payload['monitoring'] = 0
+            if not IS_PERFORMANCE_ENABLE:
+                payload['performance'] = 0
 
             # Send heartbeat request to server_url
             response = requests.get(SERVER_HEARTBEATS_URL, headers=HEADERS, params=payload)

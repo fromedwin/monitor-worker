@@ -38,6 +38,10 @@ You will need to add the following environment variables to your `.env` file
 
 `WEBAUTH_PASSWORD` (optional) password to protect none public access. If none, it is randomly generated.
 
+`DISABLE_MONITORING` (default False) disable availability monitoring
+
+`DISABLE_PERFORMANCE` (default False) disable performance monitoring
+
 ## Nginx logs
 
 Add extra entrypoint to install `logrotate` on start and start `crond`.
