@@ -107,7 +107,7 @@ async function runPerformanceTask () {
 					},
 					body: runnerResult.report
 				}).then((returnedResponse) => {
-					console.log("Report has been forwarded");
+					console.log("Report has been forwarded http status", returnedResponse.status)
 				}).catch((error) => {
 				  console.log(error)
 				});
