@@ -106,15 +106,20 @@ async function runPerformanceTask () {
 						'Content-Type': 'application/json'
 					},
 					body: runnerResult.report
+				}).then((returnedResponse) => {
+					console.log("Report has been forwarded");
+				}).catch((error) => {
+				  console.log(error)
 				});
-				console.log("Report has been forwarded");
+
+				// Kill chrome process
 				await chrome.kill();
 
 				// Wait 1 seconds before next request
 				await new Promise(resolve => setTimeout(resolve, 1000));
 			} else {
 				// Wait 5 seconds before next request
-				await new Promise(resolve => setTimeout(resolve, 5000));
+				await new Promise(resolve => setTimeout(resolve, 10000));
 			}
 		} catch (error) {
 			console.error(error);
