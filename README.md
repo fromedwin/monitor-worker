@@ -42,6 +42,9 @@ You will need to add the following environment variables to your `.env` file
 
 `DISABLE_PERFORMANCE` (default False) disable performance monitoring
 
+`MAIL` (required) email to send alerts
+
+
 ## Nginx logs
 
 Add extra entrypoint to install `logrotate` on start and start `crond`.
