@@ -50,7 +50,7 @@ def register(url):
         dotenv.set_key(dotenv.find_dotenv(), "UUID", json["uuid"])
 
     except Exception as err:
-        raise Exception(f'[{datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')}]: {err}')
+        raise Exception(f"[{datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')}]: {err}")
 
 if __name__== "__main__" :
 

@@ -73,7 +73,7 @@ if __name__ == '__main__':
                 load_config.load_config(SERVER_URL)
 
         except Exception as err:
-            print(f'[{datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')}]: {err}')
+            print(f"[{datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')}]: {err}")
         except KeyboardInterrupt as ex:
             print('goodbye!')
             break
