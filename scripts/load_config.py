@@ -31,7 +31,7 @@ def load_config(url=None):
         response = requests.get(SERVER_PROMETHEUS_CONFIG_URL, headers=headers)
         response.raise_for_status()
     except Exception as err:
-        raise Exception(f'Error occurred: {err}')
+        raise Exception(f'[{datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')}]: {err}')
     else:
         content = response.text
         print(f'> Prometheus have been loaded from {SERVER_URL}')
@@ -46,7 +46,7 @@ def load_config(url=None):
         response = requests.get(SERVER_ALERTS_CONFIG_URL, headers=headers)
         response.raise_for_status()
     except Exception as err:
-        raise Exception(f'Error occurred: {err}')
+        raise Exception(f'[{datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')}]: {err}')
     else:
         content = response.text
         print(f'> Alerts have been loaded from {SERVER_URL}')
@@ -62,7 +62,7 @@ def load_config(url=None):
         response = requests.get(SERVER_ALERTMANAGER_CONFIG_URL, headers=headers)
         response.raise_for_status()
     except Exception as err:
-        raise Exception(f'Error occurred: {err}')
+        raise Exception(f'[{datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')}]: {err}')
     else:
         content = response.text
         print(f'> Alertmanager have been loaded from {SERVER_URL}')
