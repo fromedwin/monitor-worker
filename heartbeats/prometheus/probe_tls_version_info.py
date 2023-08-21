@@ -19,7 +19,7 @@ def query(url, type, id, start=datetime.datetime.now().timestamp()):
 
 
 def get_probe_tls_version_info(url, id, start=datetime.datetime.now().timestamp()):
-    return query(url, 'application', id, start)
+    return query(url, 'project', id, start)
     
 def get_probe_tls_version_info_user(url, id, start=datetime.datetime.now().timestamp()):
     return query(url, 'user', id, start)

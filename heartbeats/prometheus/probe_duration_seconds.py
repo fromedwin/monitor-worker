@@ -42,7 +42,7 @@ def get_probe_duration_seconds(url, id, start, duration=600):
     """
         Fetch prometheus probe duration seconds data
     """
-    return query(url, 'application', id, start, duration)
+    return query(url, 'project', id, start, duration)
 
 
 def get_probe_duration_seconds_user(url, id, start, duration=600):
