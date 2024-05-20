@@ -19,7 +19,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 See for sample https://raw.githubusercontent.com/favoloso/conventional-changelog-emoji/master/CHANGELOG.md
 -->
-## [1.0.0] - 2013-09-06
+## [1.0.1] - 2024-05-20
+### 🔒 Security
+-  Update dependencies (#5)
+
+## [1.0.0] - 2023-09-06
 ### ✨ Feature
 - Heartbeat to monitor server every 10s
 - Monitor availability of urls
